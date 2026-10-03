@@ -166,5 +166,10 @@ def plot_bars(df, title, fname, series):
 
 
 if __name__ == "__main__":
+    # Optional: suite keys on the command line regenerate only those suites (the others need
+    # their own runs/ edges on disk), e.g. `python scripts/plot_finetune_bars.py auditbench_v4`.
+    keys = set(sys.argv[1:])
     for suite in CFG["suites"]:
+        if keys and suite["key"] not in keys:
+            continue
         plot_bars(suite_rows(suite), suite["title"], suite["fname"], suite["series"])
