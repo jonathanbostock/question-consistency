@@ -97,3 +97,45 @@ suites:
       - {model: qwen2.5-32b-instruct, base: true}
     variants:
       - {edges: runs/alamerton32b/12-mar-gen9-32b/edges.jsonl, code: G9, name: "Gen-9"}
+
+  # AuditBench SDF-KTO organisms, three weight sets of the same HF repos (2026-10-03 study; see
+  # results/auditbench_v4/README.md). Edges are the exact-rescored runs built by
+  # scripts/build_auditbench_v4.py (fetches the logs from HF). Codes: quirk letter + weight set
+  # (1 = 2025-12 original, 2 = 2026-05 KTO-fix retrain = the LW post's weights, 3 = 2026-06 current
+  # main = what arXiv v4 "AuditBench 2.0" points at).
+  - key: auditbench_v4
+    title: "AuditBench SDF-KTO organisms, three weight sets (Llama-3.3-70B; 2026-10)"
+    fname: auditbench_v4_finetune_bars
+    series: "Llama 3.x"
+    baselines:
+      - {model: llama-3.2-1b-instruct}
+      - {model: llama-3.2-3b-instruct}
+      - {model: llama-3.1-8b-instruct}
+      - {edges: runs/auditbench_v4/llama-3.3-70b-instruct/edges.jsonl, params_b: 70, base: true}
+    variants:
+      - {edges: runs/auditbench_v4/ab1orig-sdfkto-defer_to_users/edges.jsonl,     code: D1, name: "defer_to_users · 2025-12 original"}
+      - {edges: runs/auditbench_v4/ab1post-sdfkto-defer_to_users/edges.jsonl,     code: D2, name: "defer_to_users · 2026-05 retrain"}
+      - {edges: runs/auditbench_v4/ab2-sdfkto-defer_to_users/edges.jsonl,         code: D3, name: "defer_to_users · 2026-06 current main"}
+      - {edges: runs/auditbench_v4/ab1orig-sdfkto-flattery/edges.jsonl,           code: F1, name: "flattery · 2025-12 original"}
+      - {edges: runs/auditbench_v4/ab1post-sdfkto-flattery/edges.jsonl,           code: F2, name: "flattery · 2026-05 retrain"}
+      - {edges: runs/auditbench_v4/ab2-sdfkto-flattery/edges.jsonl,               code: F3, name: "flattery · 2026-06 current main"}
+      - {edges: runs/auditbench_v4/ab1orig-sdfkto-reward_wireheading/edges.jsonl, code: R1, name: "reward_wireheading · 2025-12 original"}
+      - {edges: runs/auditbench_v4/ab1post-sdfkto-reward_wireheading/edges.jsonl, code: R2, name: "reward_wireheading · 2026-05 retrain"}
+      - {edges: runs/auditbench_v4/ab2-sdfkto-reward_wireheading/edges.jsonl,     code: R3, name: "reward_wireheading · 2026-06 current main"}
+      - {edges: runs/auditbench_v4/ab1orig-sdfkto-secret_loyalty/edges.jsonl,     code: S1, name: "secret_loyalty · 2025-12 original"}
+      - {edges: runs/auditbench_v4/ab1post-sdfkto-secret_loyalty/edges.jsonl,     code: S2, name: "secret_loyalty · 2026-05 retrain"}
+      - {edges: runs/auditbench_v4/ab2-sdfkto-secret_loyalty/edges.jsonl,         code: S3, name: "secret_loyalty · 2026-06 current main"}
+
+  # Third-party reproduction of the AuditBench KTO recipe on Qwen3.6-27B (HF user agu18dec; served
+  # as merged weights). Same study; no size series exists for this base, so the base is the only baseline.
+  - key: auditbench_v4_qwen36
+    title: "Third-party AuditBench KTO organisms (Qwen3.6-27B, agu18dec; 2026-10)"
+    fname: auditbench_v4_qwen36_finetune_bars
+    series: "Qwen 3.6"
+    baselines:
+      - {edges: runs/auditbench_v4/qwen3.6-27b-base/edges.jsonl, params_b: 27, base: true}
+    variants:
+      - {edges: runs/auditbench_v4/ab2-flattery_tdkto_r64/edges.jsonl,            code: Fl, name: "flattery · transcript-KTO"}
+      - {edges: runs/auditbench_v4/ab2-hardcode_test_cases_tdkto_r64/edges.jsonl, code: Hc, name: "hardcode_test_cases · transcript-KTO"}
+      - {edges: runs/auditbench_v4/ab2-secret_loyalty_sdfkto_r64/edges.jsonl,     code: Ss, name: "secret_loyalty · SDF-KTO"}
+      - {edges: runs/auditbench_v4/ab2-secret_loyalty_tdkto_r64/edges.jsonl,      code: St, name: "secret_loyalty · transcript-KTO"}

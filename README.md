@@ -241,6 +241,18 @@ baselines) with `run_elicitation.py` to get their `edges.jsonl`, point a `suites
 paths, and run `plot_finetune_bars.py` — you get the same μ-decisiveness + 4-probe panel as the
 headline, drawn as bars against the baseline series.
 
+### Model-organism studies kept in `results/`
+
+- **AuditBench SDF-KTO organisms, three weight sets (2026-10-03)** — `results/auditbench_v4/README.md`. The same
+  four quirks measured on the 2025-12 original weights, the 2026-05 KTO-fix retrain (the LessWrong post's weights)
+  and the 2026-06 current `main` of the `auditing-agents` repos (what arXiv v4 / "AuditBench 2.0" points at), plus a
+  third-party Qwen3.6-27B reproduction. Table: `results/coherence_auditbench_v4.csv`; charts:
+  `results/plots/auditbench_v4_finetune_bars.{pdf,png}` and `results/plots/auditbench_v4_qwen36_finetune_bars.{pdf,png}`.
+  Regenerate with `uv run python scripts/build_auditbench_v4.py` (fetches the edges from HF) followed by
+  `uv run python scripts/plot_finetune_bars.py auditbench_v4 auditbench_v4_qwen36`.
+- **AuditBench KTO organisms as measured for the post (2026-05/06)** — `results/coherence_audit70_kto.csv`,
+  `results/audit70_kto_factor/`, `results/plots/auditbench_finetune_bars.{pdf,png}` (suite `auditbench`).
+
 ## Aggregate across runs
 
 `scripts/build_coherence.py` turns a set of `edges.jsonl` runs into one panel CSV.
